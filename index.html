@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plan Nutricional - Recomposición Corporal</title>
+    <!-- Tailwind CSS para los estilos rápidos y modernos -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js para la gráfica de progreso -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .tab-content { display: none; animation: fadeIn 0.3s ease-in-out; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans min-h-screen">
+
+    <div class="max-w-5xl mx-auto p-4 md:p-8">
+        <!-- Encabezado -->
+        <header class="mb-8">
+            <h1 class="text-3xl md:text-4xl font-extrabold text-gray-900">Mi Plan Nutricional</h1>
+            <p class="text-gray-500 mt-2 text-lg">Estrategia de recomposición corporal | 60 Días</p>
+        </header>
+
+        <!-- Navegación de Pestañas -->
+        <div class="flex overflow-x-auto space-x-2 mb-8 pb-2">
+            <button onclick="switchTab('objetivo', this)" class="tab-btn bg-blue-600 text-white px-5 py-3 rounded-xl font-medium whitespace-nowrap shadow-md transition-all">🎯 Mi Objetivo</button>
+            <button onclick="switchTab('recetario', this)" class="tab-btn bg-white text-gray-600 hover:bg-gray-100 px-5 py-3 rounded-xl font-medium whitespace-nowrap transition-all">🍽️ Recetario</button>
+            <button onclick="switchTab('compras', this)" class="tab-btn bg-white text-gray-600 hover:bg-gray-100 px-5 py-3 rounded-xl font-medium whitespace-nowrap transition-all">🛒 Lista de Mandado</button>
+            <button onclick="switchTab('checkin', this)" class="tab-btn bg-white text-gray-600 hover:bg-gray-100 px-5 py-3 rounded-xl font-medium whitespace-nowrap transition-all">📈 Check-in</button>
+        </div>
+
+        <!-- Pestaña 1: Objetivo -->
+        <main id="objetivo" class="tab-content active bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+            <h2 class="text-2xl font-bold mb-6">Perfil y Macros</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                <div class="bg-gray-50 p-4 rounded-xl text-center border border-gray-100">
+                    <p class="text-sm text-gray-500 uppercase">Edad</p>
+                    <p class="text-2xl font-bold">38 años</p>
+                </div>
+                <div class="bg-gray-50 p-4 rounded-xl text-center border border-gray-100">
+                    <p class="text-sm text-gray-500 uppercase">Estatura</p>
+                    <p class="text-2xl font-bold">1.70 m</p>
+                </div>
+                <div class="bg-gray-50 p-4 rounded-xl text-center border border-gray-100">
+                    <p class="text-sm text-gray-500 uppercase">Peso Actual</p>
+                    <p class="text-2xl font-bold text-red-500">79 kg</p>
+                </div>
+                <div class="bg-gray-50 p-4 rounded-xl text-center border border-gray-100">
+                    <p class="text-sm text-gray-500 uppercase">Meta</p>
+                    <p class="text-2xl font-bold text-green-500">74 kg</p>
+                </div>
+            </div>
+
+            <div class="bg-blue-50 border-l-4 border-blue-500 p-5 rounded-r-xl mb-8">
+                <h3 class="font-bold text-blue-900">Estrategia: Déficit Moderado (2,100 kcal)</h3>
+                <p class="text-blue-800 text-sm mt-2">Bajar de peso oxidando grasa mientras construyes masa muscular requiere proteínas altas y un déficit calculado. Cumplir tus macros es la clave.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="p-5 border border-gray-100 rounded-xl bg-gray-50">
+                    <p class="font-bold text-gray-700 mb-1">Proteína (30%)</p>
+                    <p class="text-3xl font-extrabold text-blue-600">160g</p>
+                    <p class="text-xs text-gray-500 mt-1">640 kcal</p>
+                </div>
+                <div class="p-5 border border-gray-100 rounded-xl bg-gray-50">
+                    <p class="font-bold text-gray-700 mb-1">Carbohidratos (44%)</p>
+                    <p class="text-3xl font-extrabold text-green-600">230g</p>
+                    <p class="text-xs text-gray-500 mt-1">920 kcal</p>
+                </div>
+                <div class="p-5 border border-gray-100 rounded-xl bg-gray-50">
+                    <p class="font-bold text-gray-700 mb-1">Grasas (26%)</p>
+                    <p class="text-3xl font-extrabold text-yellow-500">60g</p>
+                    <p class="text-xs text-gray-500 mt-1">540 kcal</p>
+                </div>
+            </div>
+        </main>
+
+        <!-- Pestaña 2: Recetario -->
+        <main id="recetario" class="tab-content bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+            <h2 class="text-2xl font-bold mb-2">Menú Rotativo (Ejemplo Fase 1)</h2>
+            <p class="text-gray-500 mb-6">Alterna estos menús para cubrir los 60 días sin aburrirte.</p>
+            
+            <div class="space-y-4">
+                <!-- Desayuno -->
+                <div class="p-4 border border-gray-100 rounded-xl hover:shadow-md transition">
+                    <span class="bg-orange-100 text-orange-800 text-xs font-bold px-3 py-1 rounded-full">Desayuno</span>
+                    <h4 class="font-bold text-lg mt-2">Avena nocturna proteica</h4>
+                    <p class="text-sm text-gray-600 mt-1">40g avena, 1 scoop proteína, chía y frutos rojos.</p>
+                    <p class="text-sm font-bold text-blue-600 mt-2">450 kcal | P: 35g, C: 45g, G: 15g</p>
+                </div>
+                
+                <!-- Comida -->
+                <div class="p-4 border border-gray-100 rounded-xl hover:shadow-md transition">
+                    <span class="bg-green-100 text-green-800 text-xs font-bold px-3 py-1 rounded-full">Comida</span>
+                    <h4 class="font-bold text-lg mt-2">Pasta integral al Pesto casero con Pollo</h4>
+                    <p class="text-sm text-gray-600 mt-1">80g pasta (en crudo), pesto (albahaca, ajo, 1 cdita aceite oliva), 180g pechuga asada.</p>
+                    <p class="text-sm font-bold text-blue-600 mt-2">650 kcal | P: 55g, C: 70g, G: 20g</p>
+                </div>
+
+                <!-- Cena -->
+                <div class="p-4 border border-gray-100 rounded-xl hover:shadow-md transition">
+                    <span class="bg-purple-100 text-purple-800 text-xs font-bold px-3 py-1 rounded-full">Cena</span>
+                    <h4 class="font-bold text-lg mt-2">Tostadas de Pollo o Atún</h4>
+                    <p class="text-sm text-gray-600 mt-1">3 tostadas horneadas, 120g pollo deshebrado, lechuga y pico de gallo.</p>
+                    <p class="text-sm font-bold text-blue-600 mt-2">400 kcal | P: 30g, C: 40g, G: 10g</p>
+                </div>
+            </div>
+        </main>
+
+        <!-- Pestaña 3: Compras -->
+        <main id="compras" class="tab-content bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+            <h2 class="text-2xl font-bold mb-2">Lista de Mandado (15 Días)</h2>
+            <p class="text-gray-500 mb-6">Presupuesto estimado: $1,850 - $2,100 MXN por quincena.</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <h3 class="font-bold text-blue-800 border-b pb-2 mb-3">Proteínas y Lácteos</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li class="flex justify-between bg-gray-50 p-2 rounded"><span>Pechuga de pollo</span> <strong>3 kg</strong></li>
+                        <li class="flex justify-between bg-gray-50 p-2 rounded"><span>Huevos</span> <strong>2 carteras</strong></li>
+                        <li class="flex justify-between bg-gray-50 p-2 rounded"><span>Atún en agua</span> <strong>10 latas</strong></li>
+                        <li class="flex justify-between bg-gray-50 p-2 rounded"><span>Queso panela</span> <strong>800 g</strong></li>
+                        <li class="flex justify-between bg-gray-50 p-2 rounded"><span>Yogur griego natural</span> <strong>1 kg</strong></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-bold text-blue-800 border-b pb-2 mb-3">Carbohidratos y Vegetales</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li class="flex justify-between bg-gray-50 p-2 rounded"><span>Avena en hojuelas</span> <strong>1 kg</strong></li>
+                        <li class="flex justify-between bg-gray-50 p-2 rounded"><span>Arroz / Pasta integral</span> <strong>500 g c/u</strong></li>
+                        <li class="flex justify-between bg-gray-50 p-2 rounded"><span>Aguacate</span> <strong>1.5 kg</strong></li>
+                        <li class="flex justify-between bg-gray-50 p-2 rounded"><span>Albahaca fresca y ajo</span> <strong>1 manojo</strong></li>
+                        <li class="flex justify-between bg-gray-50 p-2 rounded"><span>Espinacas y brócoli</span> <strong>2 kg</strong></li>
+                    </ul>
+                </div>
+            </div>
+        </main>
+
+        <!-- Pestaña 4: Check-in -->
+        <main id="checkin" class="tab-content bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+            <h2 class="text-2xl font-bold mb-6">Progreso Semanal</h2>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Formulario -->
+                <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
+                    <form id="checkinForm" class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 mb-1">Peso actual (kg)</label>
+                            <input type="number" id="pesoInput" step="0.1" class="w-full border rounded-lg p-2 outline-none focus:border-blue-500" required placeholder="Ej. 78.5">
+                        </div>
+                        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition">Guardar Registro</button>
+                    </form>
+                </div>
+
+                <!-- Gráfica -->
+                <div class="lg:col-span-2">
+                    <canvas id="progresoChart"></canvas>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Lógica de la página -->
+    <script>
+        // Navegación de pestañas
+        function switchTab(tabId, btn) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(el => {
+                el.classList.remove('bg-blue-600', 'text-white', 'shadow-md');
+                el.classList.add('bg-white', 'text-gray-600');
+            });
+            
+            document.getElementById(tabId).classList.add('active');
+            btn.classList.remove('bg-white', 'text-gray-600');
+            btn.classList.add('bg-blue-600', 'text-white', 'shadow-md');
+        }
+
+        // Lógica de la Gráfica
+        const ctx = document.getElementById('progresoChart').getContext('2d');
+        let semanas = ['Inicio'];
+        let pesos = [79];
+
+        const chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: semanas,
+                datasets: [{
+                    label: 'Peso (kg)',
+                    data: pesos,
+                    borderColor: '#2563eb',
+                    backgroundColor: 'rgba(37, 99, 235, 0.1)',
+                    borderWidth: 3,
+                    tension: 0.3,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: { min: 73, max: 80 }
+                }
+            }
+        });
+
+        // Manejo del formulario de Check-in
+        document.getElementById('checkinForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const nuevoPeso = parseFloat(document.getElementById('pesoInput').value);
+            
+            semanas.push(`Semana ${semanas.length}`);
+            pesos.push(nuevoPeso);
+            
+            chart.update();
+            document.getElementById('pesoInput').value = '';
+        });
+    </script>
+</body>
+</html>
