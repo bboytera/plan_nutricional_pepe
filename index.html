@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plan Nutricional 60 Días - Recomposición Corporal Premium</title>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --text-color: #f8fafc;
+            --accent-color: #3b82f6; /* Cambiado a un azul más tecnológico/moderno */
+            --accent-hover: #2563eb;
+            --border-color: #334155;
+            --text-muted: #94a3b8;
+            --success-color: #10b981;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 950px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        header h1 {
+            color: var(--accent-color);
+            margin-bottom: 5px;
+        }
+
+        header p {
+            color: var(--text-muted);
+            margin: 0;
+        }
+
+        /* Tabs Navigation */
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+            padding: 10px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 0.85rem;
+        }
+
+        .tab-btn.active {
+            background-color: var(--accent-color);
+            color: #fff;
+            border-color: var(--accent-color);
+        }
+
+        .tab-btn:hover {
+            opacity: 0.9;
+        }
+
+        /* Tab Content */
+        .tab-content {
+            display: none;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        h2 {
+            color: var(--accent-color);
+            margin-top: 0;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        /* Objectives */
+        .obj-card {
+            background: rgba(255,255,255,0.03);
+            border-left: 4px solid var(--accent-color);
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .calories-badge {
+            display: inline-block;
+            background: var(--accent-color);
+            color: #fff;
+            font-weight: bold;
+            padding: 5px 12px;
+            border-radius: 20px;
+            margin: 5px 0;
+        }
+
+        /* Meal Plan 60 Days */
+        .day-select-container {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .day-meal-card {
+            background: rgba(0,0,0,0.2);
+            border: 1px solid var(--border-color);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .day-meal-card h4 {
+            margin: 0 0 15px 0;
+            color: #60a5fa;
+            font-size: 1.2rem;
+            border-bottom: 1px dashed var(--border-color);
+            padding-bottom: 8px;
+        }
+
+        .meal-detail {
+            margin: 10px 0;
+            font-size: 1rem;
+        }
+
+        /* Recipe Cards */
+        .recipe-card {
+            background: rgba(0, 0, 0, 0.25);
+            border: 1px solid var(--border-color);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .recipe-card h3 {
+            color: #60a5fa;
+            margin-top: 0;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 8px;
+        }
+
+        .recipe-card ul, .recipe-card ol {
+            margin: 8px 0;
+            padding-left: 20px;
+        }
+
+        .recipe-card li {
+            margin-bottom: 6px;
+            font-size: 0.95rem;
+        }
+
+        /* Shopping List Table */
+        .shopping-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        .shopping-table th, .shopping-table td {
+            border: 1px solid var(--border-color);
+            padding: 10px;
+            text-align: left;
+            font-size: 0.95rem;
+        }
+
+        .shopping-table th {
+            background-color: rgba(59, 130, 246, 0.1);
+            color: var(--accent-color);
+        }
+
+        /* Exercise Plan */
+        .ex-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .ex-card h3 {
+            color: #10b981;
+            margin-top: 0;
+        }
+
+        /* Check-in & Calendar */
+        .checkin-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media(max-width: 768px) {
+            .checkin-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        select, input[type="date"] {
+            background: var(--bg-color);
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 1rem;
+            width: 100%;
+            margin-top: 5px;
+            margin-bottom: 15px;
+        }
+
+        .checkbox-group {
+            margin: 15px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            background: rgba(255,255,255,0.02);
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .checkbox-label input {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--accent-color);
+            cursor: pointer;
+        }
+
+        .progress-box {
+            background: var(--bg-color);
+            border: 2px solid var(--accent-color);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        .progress-box h3 {
+            margin: 0 0 5px 0;
+            color: var(--accent-color);
+        }
+
+        .save-msg {
+            color: var(--success-color);
+            font-weight: bold;
+            margin-top: 10px;
+            display: none;
+            text-align: center;
+        }
+
+        /* Mini Calendar */
+        .calendar-container {
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+            text-align: center;
+        }
+
+        .cal-day-name {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-weight: bold;
+            padding-bottom: 5px;
+        }
+
+        .cal-day {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border-color);
+            padding: 8px 2px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .cal-day:hover {
+            border-color: var(--accent-color);
+        }
+
+        .cal-day.completed {
+            background-color: var(--success-color);
+            color: white;
+            font-weight: bold;
+            border-color: #047857;
+        }
+
+        .cal-day.other-month {
+            opacity: 0.3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Plan Nutricional - 60 Días Premium</h1>
+        <p>Recomposición Corporal | Variedad, Sabor y Calidad</p>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab(event, 'tab-objetivos')">🎯 Objetivos</button>
+        <button class="tab-btn" onclick="switchTab(event, 'tab-comidas')">🥗 Menú 60 Días</button>
+        <button class="tab-btn" onclick="switchTab(event, 'tab-recetas')">📖 Recetario Dinámico</button>
+        <button class="tab-btn" onclick="switchTab(event, 'tab-compras')">🛒 Compras Premium</button>
+        <button class="tab-btn" onclick="switchTab(event, 'tab-ejercicios')">💪 Entrenamiento</button>
+        <button class="tab-btn" onclick="switchTab(event, 'tab-checkin')">✅ Check-in</button>
+    </div>
+
+    <!-- TAB 1: OBJETIVOS -->
+    <div id="tab-objetivos" class="tab-content active">
+        <h2>Metas de Recomposición y Estilo de Vida</h2>
+        <div class="obj-card">
+            <h3>Presupuesto y Calidad de Ingredientes</h3>
+            <p>Plan diseñado con ingredientes de alto valor biológico y sin límite de presupuesto. Variedad de proteínas magras (salmón, res, pollo), grasas saludables (nueces, aceite de oliva virgen extra, aguacate) y carbohidratos complejos. Ideal para surtir tu despensa quincenal en Soriana o tu supermercado de confianza.</p>
+        </div>
+        <div class="obj-card">
+            <h3>Distribución Calórica Diaria</h3>
+            <div class="calories-badge">Meta Diaria Total: 2,100 kcal</div>
+            <p style="color:var(--accent-color); font-weight:bold; margin-top:5px;">Macros: 160g Proteína | 230g Carbohidratos | 60g Grasas</p>
+            <ul>
+                <li>🍳 <strong>Desayuno (~600 kcal):</strong> Cargas altas de proteína para iniciar el día (huevos, yogur griego, avena).</li>
+                <li>🍽️ <strong>Comida Fuerte (~900 kcal):</strong> Platillos sustanciosos y de mucho sabor (pastas al pesto, salmón, filetes) para recuperación muscular.</li>
+                <li>🌙 <strong>Cena (~600 kcal):</strong> Comidas frescas pero completas, asegurando síntesis proteica nocturna.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- TAB 2: COMIDAS (60 DÍAS) -->
+    <div id="tab-comidas" class="tab-content" style="display:none;">
+        <h2>Menú de 60 Días (Variado y Premium)</h2>
+        <div class="day-select-container">
+            <label for="menu-day-select"><strong>Selecciona el Día del Plan:</strong></label>
+            <select id="menu-day-select" onchange="renderMenuDay()" style="max-width: 250px; padding:8px; border-radius:5px; background:var(--card-bg); color:white; border:1px solid var(--border-color);">
+                <!-- Generated via JS -->
+            </select>
+        </div>
+        <div id="daily-menu-display"></div>
+        <p style="text-align:center; color:var(--accent-color); font-weight:bold; margin-top:15px;">👉 Ve a la pestaña "📖 Recetario Dinámico" para ver cómo preparar el día seleccionado.</p>
+    </div>
+
+    <!-- TAB 3: RECETARIO DETALLADO DINÁMICO -->
+    <div id="tab-recetas" class="tab-content" style="display:none;">
+        <h2>📖 Recetario Detallado del Día</h2>
+        <p style="color: var(--text-muted);">Aquí tienes las instrucciones exactas y gramajes de los ingredientes premium vinculados al día que elegiste.</p>
+        
+        <div id="dynamic-recipe-display">
+            <!-- JS will populate recipes here based on the selected day -->
+        </div>
+    </div>
+
+    <!-- TAB 4: LISTA DE COMPRAS -->
+    <div id="tab-compras" class="tab-content" style="display:none;">
+        <h2>🛒 Lista de Compras Quincenal</h2>
+        <p style="color:var(--text-muted);">Sugerencia de compras quincenales para cubrir tu rotación de menús con ingredientes de alta calidad.</p>
+        <table class="shopping-table">
+            <thead>
+                <tr>
+                    <th>Categoría</th>
+                    <th>Ingredientes a Surtir</th>
+                    <th>Cantidad Aprox. (15 días)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td><strong>Proteínas Premium</strong></td><td>Pechuga de pollo, Filete de res (cuete o sirloin magro), Filetes de Salmón, Medallones de Atún, Huevos blancos/rojos.</td><td>3kg Pollo, 1kg Res, 1kg Salmón/Atún, 3 carteras huevo.</td></tr>
+                <tr><td><strong>Lácteos y Derivados</strong></td><td>Yogur griego natural (sin azúcar), Queso panela, Queso parmesano (para pesto).</td><td>1.5 kg Yogur, 1 kg Panela, 150g Parmesano.</td></tr>
+                <tr><td><strong>Carbohidratos</strong></td><td>Pasta integral/clásica, Arroz, Quinoa, Avena en hojuelas, Pan integral artesanal, Camote.</td><td>1kg Pasta, 1kg Arroz/Quinoa, 1kg Avena, 2 barras pan.</td></tr>
+                <tr><td><strong>Vegetales Frescos</strong></td><td>Albahaca fresca (abundante), Espárragos, Espinacas, Pimientos de colores, Champiñones, Brócoli, Jitomate cherry.</td><td>Surtido abundante (aprox. 4-5 kg en total).</td></tr>
+                <tr><td><strong>Frutas</strong></td><td>Frutos rojos (zarzamoras, fresas, arándanos), Plátanos, Manzanas, Aguacate (mucho).</td><td>2kg Frutos rojos, 2kg Plátano, 2kg Aguacate.</td></tr>
+                <tr><td><strong>Grasas y Especias</strong></td><td>Aceite de oliva virgen extra, Nueces de castilla/almendras, Ajo, Semillas de chía.</td><td>1 botella AOVE, 500g Nueces, 1 cabeza de ajo.</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- TAB 5: EJERCICIOS -->
+    <div id="tab-ejercicios" class="tab-content" style="display:none;" >
+        <h2>Tu Rutina: Fuerza y Recuperación</h2>
+        <div class="ex-card">
+            <h3>💪 4 Días a la Semana: Entrenamiento de Fuerza / Hipertrofia</h3>
+            <ul>
+                <li><strong>Enfoque:</strong> Entrenamiento con pesas o calistenia progresiva para estimular el crecimiento muscular aprovechando las 2,100 kcal.</li>
+                <li><strong>Distribución sugerida:</strong> Lunes (Pecho/Tríceps), Martes (Espalda/Bíceps), Jueves (Pierna completa), Viernes (Hombros/Core).</li>
+                <li><strong>Duración:</strong> 45 a 60 minutos intensos.</li>
+            </ul>
+        </div>
+        <div class="ex-card">
+            <h3>🧘‍♂️ Días de Recuperación y Trabajo Energético</h3>
+            <ul>
+                <li><strong>Zhineng Qigong:</strong> Práctica de métodos de sanación y acumulación de Qi los días de descanso activo (Miércoles y fines de semana).</li>
+                <li><strong>Meditación Zu Chang Fa:</strong> Aprovecha el trabajo mental y auditivo para mantener el sistema nervioso central en estado parasimpático, optimizando la digestión y recuperación muscular.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- TAB 6: CHECK-IN & CALENDARIO -->
+    <div id="tab-checkin" class="tab-content" style="display:none;">
+        <h2>Registro Diario y Calendario de Logros (60 Días)</h2>
+        <div class="checkin-grid">
+            <div>
+                <label for="checkin-date"><strong>Selecciona el Día a Registrar:</strong></label>
+                <input type="date" id="checkin-date" value="2026-09-30" onchange="loadDayData()">
+
+                <p>Marca tus 3 comidas del día seleccionado:</p>
+
+                <div class="checkbox-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="meal1-check" value="600" onchange="updateCalories()">
+                        <span>🍳 <strong>Desayuno</strong> — 600 kcal</span>
+                    </label>
+
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="meal2-check" value="900" onchange="updateCalories()">
+                        <span>🍽️ <strong>Comida Fuerte</strong> — 900 kcal</span>
+                    </label>
+
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="meal3-check" value="600" onchange="updateCalories()">
+                        <span>🌙 <strong>Cena</strong> — 600 kcal</span>
+                    </label>
+                </div>
+
+                <div class="progress-box">
+                    <h3>Calorías del Día: <span id="calories-total">0</span> / 2,100 kcal</h3>
+                    <p id="progress-status" style="margin: 5px 0 0 0; color: var(--text-muted);">Faltan comidas por registrar.</p>
+                </div>
+
+                <div style="margin-top: 15px;">
+                    <button class="tab-btn" style="background-color: var(--accent-color); color: #fff; width: 100%; padding: 12px; font-size:1.1rem;" onclick="saveCheckin()">Guardar Registro del Día</button>
+                    <div id="save-msg" class="save-msg">¡Día guardado y marcado en el calendario!</div>
+                </div>
+            </div>
+
+            <!-- Mini Calendar View -->
+            <div class="calendar-container">
+                <div class="calendar-header">
+                    <button onclick="changeMonth(-1)" style="background:var(--card-bg); border:1px solid var(--border-color); color:white; padding:4px 10px; border-radius:4px; cursor:pointer;">◀</button>
+                    <span id="cal-month-year">Septiembre 2026</span>
+                    <button onclick="changeMonth(1)" style="background:var(--card-bg); border:1px solid var(--border-color); color:white; padding:4px 10px; border-radius:4px; cursor:pointer;">▶</button>
+                </div>
+                <div class="calendar-grid">
+                    <div class="cal-day-name">Lu</div>
+                    <div class="cal-day-name">Ma</div>
+                    <div class="cal-day-name">Mi</div>
+                    <div class="cal-day-name">Ju</div>
+                    <div class="cal-day-name">Vi</div>
+                    <div class="cal-day-name">Sá</div>
+                    <div class="cal-day-name">Do</div>
+                </div>
+                <div id="calendar-days" class="calendar-grid" style="margin-top: 5px;"></div>
+                <div style="margin-top: 10px; font-size: 0.8rem; text-align: center; color: var(--text-muted);">
+                    🟢 Días verdes = 2,100 kcal completadas (Logrados)
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // DATA ESTRUCTURADA PARA 10 DÍAS PREMIUM (SE REPITEN PARA FORMAR LOS 60 DÍAS)
+    const breakfastData = [
+        {
+            title: "Bowl de Yogur Griego con Frutos Rojos y Nueces.",
+            ing: "<li>250g de Yogur griego natural (sin azúcar).</li><li>1 taza de frutos rojos (fresas, zarzamoras).</li><li>30g de nueces de castilla picadas.</li><li>2 cdas de semillas de chía y un toque de miel pura.</li>",
+            prep: "<li>Sirve el yogur en un tazón amplio.</li><li>Agrega la chía y revuelve bien.</li><li>Decora con los frutos rojos frescos, las nueces y corona con un hilo de miel. Rico en proteína y grasas saludables.</li>"
+        },
+        {
+            title: "Tostadas de Aguacate con Huevos Pochados.",
+            ing: "<li>2 rebanadas gruesas de pan integral artesanal.</li><li>1/2 aguacate hass maduro.</li><li>3 huevos enteros.</li><li>Pizca de sal en escamas y pimienta negra.</li>",
+            prep: "<li>Tuesta el pan. Unta el aguacate machacado uniformemente.</li><li>En una olla con agua hirviendo y un chorrito de vinagre, haz un remolino y pocha los huevos por 3-4 minutos.</li><li>Sirve los huevos sobre el pan y sazona.</li>"
+        },
+        {
+            title: "Pancakes Proteicos de Plátano y Avena.",
+            ing: "<li>60g de avena licuada (hecha harina).</li><li>1 scoop de proteína en polvo (vainilla) o 3 claras de huevo adicionales.</li><li>1 plátano maduro machacado.</li><li>2 huevos enteros.</li>",
+            prep: "<li>Mezcla todos los ingredientes en un tazón hasta formar una masa espesa.</li><li>En un sartén de teflón con un toque de aceite de coco, vierte porciones de la masa.</li><li>Cocina por ambos lados y acompáñalos con un poco de crema de cacahuate natural.</li>"
+        },
+        {
+            title: "Omelette Relleno de Champiñones, Espinaca y Queso Panela.",
+            ing: "<li>3 huevos enteros + 2 claras.</li><li>1 taza de champiñones rebanados y 1 puñado de espinacas.</li><li>60g de queso panela.</li><li>Aceite de oliva.</li>",
+            prep: "<li>Saltea los champiñones y espinacas en aceite de oliva.</li><li>Bate los huevos y viértelos en el sartén. Agrega el queso panela en cubos.</li><li>Dobla el omelette y acompáñalo con 1 rebanada de pan tostado.</li>"
+        },
+        {
+            title: "Avena Horneada con Manzana y Almendras.",
+            ing: "<li>60g de hojuelas de avena.</li><li>1 manzana picada en cubitos.</li><li>1 taza de leche descremada o vegetal.</li><li>30g de almendras fileteadas y canela.</li>",
+            prep: "<li>Mezcla la avena, la leche, la manzana y la canela.</li><li>Si tienes tiempo, hornéalo por 20 min a 180°C (o cocínalo espeso en estufa).</li><li>Agrega las almendras tostadas al momento de servir. Acompaña con un batido de proteína.</li>"
+        },
+        {
+            title: "Huevos al Sartén con Salsa de Jitomate Cherry y Albahaca.",
+            ing: "<li>3 huevos enteros.</li><li>1 taza de jitomates cherry partidos a la mitad.</li><li>Hojas de albahaca fresca.</li><li>2 rebanadas de pan integral.</li>",
+            prep: "<li>Saltea los jitomates cherry en aceite de oliva hasta que suelten su jugo.</li><li>Rompe los huevos directamente sobre los jitomates. Tapa el sartén para que se cuezan.</li><li>Termina con hojas de albahaca fresca y acompaña con el pan.</li>"
+        },
+        {
+            title: "Licuado Poderoso de Recomposición y Sándwich Ligero.",
+            ing: "<li>Licuado: 1 plátano, 1 taza de leche, 1 scoop de proteína, 2 cdas de avena, 1 cda de crema de almendras.</li><li>Sándwich: 2 rebanadas de pan integral, 60g pechuga de pavo, espinaca.</li>",
+            prep: "<li>Licúa todos los ingredientes de la bebida hasta que quede suave.</li><li>Prepara el sándwich en frío o tostado. Ideal para días donde necesitas salir rápido pero bien nutrido.</li>"
+        },
+        {
+            title: "Huevos Revueltos con Salmón Ahumado y Espárragos.",
+            ing: "<li>3 huevos enteros.</li><li>50g de salmón ahumado troceado.</li><li>6 espárragos picados.</li><li>1 cdita de aceite de oliva.</li>",
+            prep: "<li>Saltea los espárragos ligeramente.</li><li>Agrega los huevos batidos. Cuando estén casi listos, integra el salmón ahumado (se cocina muy rápido).</li><li>Acompaña con una rebanada de pan tostado.</li>"
+        },
+        {
+            title: "Tazón de Quinoa Dulce con Plátano y Nuez.",
+            ing: "<li>1 taza de quinoa previamente cocida.</li><li>1 taza de leche o bebida de almendra.</li><li>1 plátano en rodajas.</li><li>30g de nuez pecana.</li>",
+            prep: "<li>Calienta la quinoa con la leche y un toque de vainilla hasta que tome textura de papilla.</li><li>Sirve en un tazón profundo y decora con el plátano y las nueces. Agrega claras de huevo cocidas aparte si necesitas más proteína.</li>"
+        },
+        {
+            title: "Arepas/Gorditas de Avena Rellenas de Pollo Deshebrado.",
+            ing: "<li>60g de harina de avena mezclada con agua para formar masa.</li><li>120g de pechuga de pollo deshebrada.</li><li>1/4 de aguacate.</li>",
+            prep: "<li>Forma 2 arepas con la masa de avena y cocínalas en el comal.</li><li>Ábrelas por la mitad y rellénalas con el pollo deshebrado mezclado con el aguacate a modo de aderezo natural.</li>"
+        }
+    ];
+
+    const lunchData = [
+        {
+            title: "Tu Favorito: Pasta al Pesto Genovese Casero con Pechuga a la Plancha.",
+            ing: "<li>120g de pasta (peso en crudo, de preferencia integral).</li><li>Pesto: Albahaca fresca, 1 diente de ajo, 1 cda de aceite de oliva, 1 cda de nueces/piñones, 1 cda parmesano.</li><li>180g de pechuga de pollo.</li>",
+            prep: "<li>Licúa o machaca en mortero la albahaca, ajo, aceite, nueces y parmesano para hacer tu pesto casero.</li><li>Hierve la pasta al dente. Mézclala con el pesto.</li><li>Asa la pechuga a la plancha con sal y pimienta. Sirve junto.</li>"
+        },
+        {
+            title: "Filete de Salmón al Horno con Quinoa y Espárragos.",
+            ing: "<li>200g de filete de salmón fresco.</li><li>1 taza de quinoa cocida.</li><li>1 manojo de espárragos verdes.</li><li>Aceite de oliva, limón y eneldo.</li>",
+            prep: "<li>Sazona el salmón y los espárragos con aceite de oliva, sal, pimienta y eneldo.</li><li>Hornea a 200°C por 12-15 minutos.</li><li>Sirve el salmón sobre una cama de quinoa cocida y acompaña con los espárragos crujientes.</li>"
+        },
+        {
+            title: "Fajitas de Res Magra con Pimientos y Guacamole.",
+            ing: "<li>180g de filete o sirloin de res en tiras.</li><li>1 pimiento rojo y 1 verde en julianas, media cebolla.</li><li>1/2 aguacate hecho guacamole.</li><li>3 tortillas de maíz.</li>",
+            prep: "<li>Saltea las verduras en un sartén bien caliente. Agrega la res y cocina al término deseado.</li><li>Prepara un guacamole sencillo (aguacate, limón, sal).</li><li>Sirve las fajitas para hacer tacos con tus tortillas calientes.</li>"
+        },
+        {
+            title: "Medallón de Atún Sellado con Puré de Camote.",
+            ing: "<li>200g de medallón de atún fresco.</li><li>1 camote mediano (aprox. 150g).</li><li>Ensalada verde (espinaca, pepino, limón).</li><li>Ajonjolí para cubrir el atún.</li>",
+            prep: "<li>Hierve o hornea el camote, luego machácalo con un toque de sal para hacer puré.</li><li>Cubre los bordes del atún con ajonjolí. Sella en un sartén muy caliente 1 minuto por lado (el centro debe quedar rosado).</li><li>Sirve el atún rebanado junto al puré y la ensalada.</li>"
+        },
+        {
+            title: "Bowl Estilo Asiático de Pollo Teriyaki Casero y Arroz.",
+            ing: "<li>180g de pechuga en cubos.</li><li>1 taza de arroz blanco cocido.</li><li>Brócoli al vapor.</li><li>Salsa: Salsa de soya baja en sodio, un toque de miel, ajo y jengibre rallado.</li>",
+            prep: "<li>Cocina el pollo y báñalo con la mezcla de soya, miel, ajo y jengibre hasta que reduzca y glasee.</li><li>Sirve en un tazón hondo la base de arroz, encima el pollo teriyaki y a un lado el brócoli al vapor.</li>"
+        },
+        {
+            title: "Pasta Bolognesa con Carne Magra de Res.",
+            ing: "<li>120g de pasta.</li><li>180g de carne molida de res (90/10 magra).</li><li>Salsa de tomate casera (jitomates licuados con ajo y cebolla).</li><li>Orégano y hojas de albahaca fresca.</li>",
+            prep: "<li>Dora la carne en un sartén. Agrega la salsa de tomate natural y deja reducir a fuego lento con las especias.</li><li>Hierve la pasta.</li><li>Sirve la pasta bañada en esta robusta salsa de carne. Alto en carbos y proteína para tus músculos.</li>"
+        },
+        {
+            title: "Pechuga Rellena de Queso y Espinacas con Arroz Salvaje.",
+            ing: "<li>1 pechuga de pollo grande (200g) abierta en mariposa.</li><li>40g de queso panela y espinacas al gusto.</li><li>1 taza de arroz salvaje o integral cocido.</li>",
+            prep: "<li>Rellena la pechuga con el queso y las espinacas. Cierra con palillos de madera.</li><li>Séllala en un sartén por ambos lados y luego tapa a fuego bajo para que se cocine el centro.</li><li>Acompaña con tu porción de arroz.</li>"
+        },
+        {
+            title: "Tacos de Pescado Blanco con Pico de Gallo y Aguacate.",
+            ing: "<li>200g de filete de pescado blanco (tilapia o robalo).</li><li>4 tortillas de maíz.</li><li>Pico de gallo abundante.</li><li>1/2 aguacate en rebanadas.</li>",
+            prep: "<li>Cocina el pescado a la plancha desmenuzándolo ligeramente con la espátula.</li><li>Sirve sobre las tortillas calientes.</li><li>Corona con abundante pico de gallo y las rebanadas de aguacate.</li>"
+        },
+        {
+            title: "Hamburguesa Fit de Res Artesanal.",
+            ing: "<li>180g de carne molida de res magra (formada en carne de hamburguesa).</li><li>2 tapas de pan de hamburguesa integral de buena calidad.</li><li>Rebanadas de jitomate, lechuga y cebolla morada.</li><li>1 taza de papas gajo horneadas (en lugar de fritas).</li>",
+            prep: "<li>Cocina la carne a la plancha. Hornea las papas cortadas en gajo con paprika y sal.</li><li>Arma tu hamburguesa sin mayonesas pesadas, usa mostaza y vegetales frescos.</li>"
+        },
+        {
+            title: "Risotto Cremoso de Quinoa con Pollo y Champiñones.",
+            ing: "<li>150g de pechuga de pollo en cubos.</li><li>1 taza de quinoa cocida.</li><li>1 taza de champiñones y 2 cdas de yogur griego natural.</li><li>Un toque de caldo de pollo.</li>",
+            prep: "<li>Saltea el pollo y los champiñones.</li><li>Agrega la quinoa y un chorrito de caldo de pollo. Deja que se evapore un poco.</li><li>Apaga el fuego, agrega el yogur griego y revuelve para lograr una textura cremosa de risotto sin usar cremas pesadas.</li>"
+        }
+    ];
+
+    const dinnerData = [
+        {
+            title: "Ensalada Completa con Medallones de Atún o Atún de Alta Calidad.",
+            ing: "<li>200g de atún en agua (lomos) o atún fresco sellado.</li><li>Base abundante de hojas verdes (espinaca, lechugas mixtas).</li><li>1/2 aguacate y tomates cherry.</li><li>Aderezo: Aceite de oliva, limón, mostaza dijon.</li>",
+            prep: "<li>Coloca las hojas verdes como base en un plato grande.</li><li>Agrega los vegetales y el atún escurrido o rebanado.</li><li>Mezcla los ingredientes del aderezo en un frasco, agita y baña tu ensalada.</li>"
+        },
+        {
+            title: "Rollitos Frescos de Pechuga de Pavo y Panela.",
+            ing: "<li>150g de pechuga de pavo en rebanadas gruesas (de buena calidad, horneada).</li><li>80g de queso panela en bastones.</li><li>1 taza de pepino y zanahoria en tiras delgadas.</li><li>2 tostadas horneadas al lado.</li>",
+            prep: "<li>Extiende las rebanadas de pavo, coloca un bastón de queso, tiras de pepino y zanahoria, y enrolla.</li><li>Cena ligera, alta en proteína, refrescante y sin necesidad de prender la estufa.</li>"
+        },
+        {
+            title: "Tazón de Pollo Asado, Brócoli y Garbanzos Tostados.",
+            ing: "<li>150g de pollo asado (sobrante de comida o cocinado al momento).</li><li>1 taza de brócoli cocido.</li><li>1/2 taza de garbanzos horneados crujientes.</li><li>1 cdita de aceite de oliva.</li>",
+            prep: "<li>En un tazón, mezcla el pollo en cubos con el brócoli calientito.</li><li>Añade los garbanzos (puedes tostarlos en sartén o freidora de aire con especias). Baña con aceite de oliva.</li>"
+        },
+        {
+            title: "Tostadas de Salpicón de Res Magra.",
+            ing: "<li>150g de falda o cuete de res deshebrada (cocida previamente).</li><li>Lechuga finamente picada, rábanos y orégano.</li><li>1 cdita de aceite de oliva y vinagre de manzana.</li><li>3 tostadas horneadas de maíz.</li>",
+            prep: "<li>Revuelve la carne deshebrada con las verduras, aceite, vinagre y orégano.</li><li>Sirve sobre las tostadas. Es una cena mexicana excelente y baja en grasas saturadas.</li>"
+        },
+        {
+            title: "Omelette de Claras con Salmón Ahumado.",
+            ing: "<li>1 huevo entero + 4 claras.</li><li>50g de salmón ahumado.</li><li>Espinaca fresca.</li><li>1 rebanada de pan tostado.</li>",
+            prep: "<li>Bate las claras y el huevo. Haz el omelette en el sartén.</li><li>Rellénalo con la espinaca fresca y el salmón ahumado (el calor residual ablandará la espinaca).</li>"
+        },
+        {
+            title: "Ceviche de Pescado Blanco con Aguacate.",
+            ing: "<li>200g de pescado blanco curtido en limón.</li><li>Cebolla morada, pepino, cilantro y jitomate picado.</li><li>1/2 aguacate en cubos.</li><li>3 tostadas horneadas.</li>",
+            prep: "<li>Una vez que el pescado cambie de color por el limón, mézclalo con las verduras.</li><li>Corona con los cubos de aguacate. Cena fresca, altísima en proteína y grasas buenas.</li>"
+        },
+        {
+            title: "Pitas Rellenas de Pollo y Tzatziki Casero.",
+            ing: "<li>1 pan pita integral.</li><li>150g de pollo en tiras asadas.</li><li>Tzatziki: 2 cdas de yogur griego, pepino rallado, ajo en polvo y limón.</li>",
+            prep: "<li>Prepara el aderezo mezclando el yogur con el pepino rallado y limón.</li><li>Abre el pan pita a la mitad, unta el tzatziki y rellena con el pollo caliente.</li>"
+        },
+        {
+            title: "Filete Mignon Ligero con Ensalada Caprese.",
+            ing: "<li>150g de filete de res magro (corte grueso).</li><li>1 jitomate grande en rodajas gruesas.</li><li>60g de queso panela o mozzarella fresco.</li><li>Hojas de albahaca y vinagre balsámico.</li>",
+            prep: "<li>Sella el filete en el sartén al término que más te guste.</li><li>Intercala en el plato una rodaja de jitomate, una de queso y una hoja de albahaca. Rocía con balsámico.</li>"
+        },
+        {
+            title: "Pizza Proteica en Base de Pan Árabe.",
+            ing: "<li>1 base de pan árabe o pita integral grande.</li><li>3 cdas de salsa de tomate natural.</li><li>100g de pollo deshebrado y 60g de queso bajo en grasa.</li><li>Vegetales al gusto (pimientos, champiñones).</li>",
+            prep: "<li>Unta la salsa en el pan, agrega el queso, el pollo y las verduras.</li><li>Hornea o tuesta en sartén tapado hasta que el queso se funda y la base esté crujiente.</li>"
+        },
+        {
+            title: "Sándwich de Atún Preparado con Aguacate.",
+            ing: "<li>2 latas de atún en agua.</li><li>1/2 aguacate (usado en lugar de mayonesa).</li><li>Pico de gallo.</li><li>2 rebanadas de pan de caja integral grueso.</li>",
+            prep: "<li>Machaca el aguacate y mézclalo con el atún drenado y el pico de gallo para hacer una pasta rica y suave.</li><li>Sirve entre los dos panes tostados. Rápido y perfecto.</li>"
+        }
+    ];
+
+    const sixtyDaysMenus = [];
+    for(let i = 0; i < 60; i++) {
+        sixtyDaysMenus.push({
+            day: i + 1,
+            bData: breakfastData[i % breakfastData.length],
+            lData: lunchData[i % lunchData.length],
+            dData: dinnerData[i % dinnerData.length]
+        });
+    }
+
+    window.onload = function() {
+        const select = document.getElementById('menu-day-select');
+        for(let i = 1; i <= 60; i++) {
+            const opt = document.createElement('option');
+            opt.value = i;
+            opt.innerText = "Día " + i + " - Menú Premium";
+            select.appendChild(opt);
+        }
+        renderMenuDay();
+        
+        // Formato de fecha actual para el calendario
+        const today = new Date();
+        const mStr = String(today.getMonth() + 1).padStart(2, '0');
+        const dStr = String(today.getDate()).padStart(2, '0');
+        document.getElementById('checkin-date').value = `${today.getFullYear()}-${mStr}-${dStr}`;
+        
+        loadDayData();
+        renderCalendar();
+    }
+
+    function renderMenuDay() {
+        const dayNum = document.getElementById('menu-day-select').value;
+        const menu = sixtyDaysMenus[dayNum - 1];
+        
+        const menuContainer = document.getElementById('daily-menu-display');
+        menuContainer.innerHTML = `
+            <div class="day-meal-card">
+                <h4>📅 Menú Recomposición (Día ${menu.day} de 60)</h4>
+                <div class="meal-detail">🍳 <strong>Desayuno (~600 kcal):</strong> ${menu.bData.title}</div>
+                <div class="meal-detail">🍽️ <strong>Comida Fuerte (~900 kcal):</strong> ${menu.lData.title}</div>
+                <div class="meal-detail">🌙 <strong>Cena (~600 kcal):</strong> ${menu.dData.title}</div>
+            </div>
+        `;
+
+        const recetarioContainer = document.getElementById('dynamic-recipe-display');
+        recetarioContainer.innerHTML = `
+            <div style="background: rgba(59, 130, 246, 0.1); padding: 10px; border-left: 4px solid var(--accent-color); margin-bottom: 20px;">
+                <h3 style="margin:0; color:var(--accent-color);">Recetas exactas para el Día ${menu.day}</h3>
+            </div>
+
+            <!-- Receta Desayuno -->
+            <div class="recipe-card">
+                <h3>🍳 Desayuno (~600 kcal)</h3>
+                <p style="color:var(--text-muted); margin-bottom:10px;"><em>${menu.bData.title}</em></p>
+                <p><strong>Ingredientes Premium:</strong></p>
+                <ul>${menu.bData.ing}</ul>
+                <p><strong>Preparación:</strong></p>
+                <ol>${menu.bData.prep}</ol>
+            </div>
+
+            <!-- Receta Comida -->
+            <div class="recipe-card">
+                <h3>🍽️ Comida Fuerte (~900 kcal)</h3>
+                <p style="color:var(--text-muted); margin-bottom:10px;"><em>${menu.lData.title}</em></p>
+                <p><strong>Ingredientes Premium:</strong></p>
+                <ul>${menu.lData.ing}</ul>
+                <p><strong>Preparación:</strong></p>
+                <ol>${menu.lData.prep}</ol>
+            </div>
+
+            <!-- Receta Cena -->
+            <div class="recipe-card">
+                <h3>🌙 Cena (~600 kcal)</h3>
+                <p style="color:var(--text-muted); margin-bottom:10px;"><em>${menu.dData.title}</em></p>
+                <p><strong>Ingredientes Premium:</strong></p>
+                <ul>${menu.dData.ing}</ul>
+                <p><strong>Preparación:</strong></p>
+                <ol>${menu.dData.prep}</ol>
+            </div>
+        `;
+    }
+
+    let currentMonth = new Date().getMonth();
+    let currentYear = new Date().getFullYear();
+
+    function switchTab(evt, tabId) {
+        const contents = document.querySelectorAll('.tab-content');
+        contents.forEach(content => {
+            content.style.display = 'none';
+            content.classList.remove('active');
+        });
+
+        const buttons = document.querySelectorAll('.tab-btn');
+        buttons.forEach(btn => btn.classList.remove('active'));
+
+        document.getElementById(tabId).style.display = 'block';
+        document.getElementById(tabId).classList.add('active');
+        evt.currentTarget.classList.add('active');
+
+        if(tabId === 'tab-checkin') {
+            renderCalendar();
+        }
+    }
+
+    function updateCalories() {
+        let total = 0;
+        const m1 = document.getElementById('meal1-check');
+        const m2 = document.getElementById('meal2-check');
+        const m3 = document.getElementById('meal3-check');
+        const status = document.getElementById('progress-status');
+
+        if (m1.checked) total += parseInt(m1.value);
+        if (m2.checked) total += parseInt(m2.value);
+        if (m3.checked) total += parseInt(m3.value);
+
+        document.getElementById('calories-total').innerText = total;
+
+        if (total >= 2100) {
+            status.innerText = "¡Excelente! Meta de proteínas y calorías cumplida.";
+            status.style.color = "var(--success-color)";
+        } else if (total > 0) {
+            status.innerText = "Vas en camino, asegura tus nutrientes del día.";
+            status.style.color = "var(--accent-color)";
+        } else {
+            status.innerText = "Faltan comidas por registrar.";
+            status.style.color = "var(--text-muted)";
+        }
+    }
+
+    function saveCheckin() {
+        const date = document.getElementById('checkin-date').value;
+        const m1 = document.getElementById('meal1-check').checked;
+        const m2 = document.getElementById('meal2-check').checked;
+        const m3 = document.getElementById('meal3-check').checked;
+        
+        const totalCal = (m1 ? 600 : 0) + (m2 ? 900 : 0) + (m3 ? 600 : 0);
+        const isCompleted = totalCal >= 2100;
+
+        const data = { meal1: m1, meal2: m2, meal3: m3, completed: isCompleted };
+        localStorage.setItem('checkin_' + date, JSON.stringify(data));
+
+        const msg = document.getElementById('save-msg');
+        msg.style.display = 'block';
+        setTimeout(() => { msg.style.display = 'none'; }, 2500);
+
+        renderCalendar();
+    }
+
+    function loadDayData() {
+        const date = document.getElementById('checkin-date').value;
+        const saved = localStorage.getItem('checkin_' + date);
+        
+        const m1 = document.getElementById('meal1-check');
+        const m2 = document.getElementById('meal2-check');
+        const m3 = document.getElementById('meal3-check');
+
+        if (saved) {
+            const data = JSON.parse(saved);
+            m1.checked = data.meal1;
+            m2.checked = data.meal2;
+            m3.checked = data.meal3;
+        } else {
+            m1.checked = false;
+            m2.checked = false;
+            m3.checked = false;
+        }
+        updateCalories();
+    }
+
+    const monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+
+    function changeMonth(direction) {
+        currentMonth += direction;
+        if (currentMonth > 11) {
+            currentMonth = 0;
+            currentYear++;
+        } else if (currentMonth < 0) {
+            currentMonth = 11;
+            currentYear--;
+        }
+        renderCalendar();
+    }
+
+    function renderCalendar() {
+        document.getElementById('cal-month-year').innerText = monthNames[currentMonth] + " " + currentYear;
+        const grid = document.getElementById('calendar-days');
+        grid.innerHTML = "";
+
+        // Ajuste para que el lunes sea el primer día de la semana (getDay() + 6) % 7
+        const firstDayIndex = (new Date(currentYear, currentMonth, 1).getDay() + 6) % 7; 
+        const totalDays = new Date(currentYear, currentMonth + 1, 0).getDate();
+
+        for (let i = 0; i < firstDayIndex; i++) {
+            const div = document.createElement('div');
+            div.classList.add('cal-day', 'other-month');
+            grid.appendChild(div);
+        }
+
+        for (let day = 1; day <= totalDays; day++) {
+            const div = document.createElement('div');
+            div.classList.add('cal-day');
+            div.innerText = day;
+
+            const mStr = String(currentMonth + 1).padStart(2, '0');
+            const dStr = String(day).padStart(2, '0');
+            const dateKey = `${currentYear}-${mStr}-${dStr}`;
+
+            div.onclick = function() {
+                document.getElementById('checkin-date').value = dateKey;
+                loadDayData();
+            };
+
+            const saved = localStorage.getItem('checkin_' + dateKey);
+            if (saved) {
+                const data = JSON.parse(saved);
+                if (data.completed) {
+                    div.classList.add('completed');
+                }
+            }
+
+            grid.appendChild(div);
+        }
+    }
+</script>
+
+</body>
+</html>
